@@ -1,7 +1,7 @@
 const chatInput = document.querySelector(".chat-input textarea");
 const sendChatBtn = document.querySelector(".chat-input span");
 const chatbox = document.querySelector(".chatbox");
-const chatboxToggler = document.querySelector(".chatbox-toggler");
+const chatboxToggler = document.querySelector(".chatbot-toggler");
 const chatboxCloseBtn = document.querySelector(".close-btn");
 
 
@@ -49,6 +49,8 @@ const handleChat =()=>{
         return;
     }    
     chatInput.value = "";
+    chatInput.style.height = `${inputInitHeight}px`;
+
     // append the user to the chat box
     chatbox.appendChild(createChatLi(userMessage,"outgoing"));
     chatbox.scrollTo(0,chatbox.scrollHeight);
@@ -67,8 +69,17 @@ chatInput.addEventListener("input",()=>{
     chatInput.style.height = `${chatInput.scrollHeight}px`
 
 });
+chatInput.addEventListener("keydown",(e)=>{
+    // if enter key is pressing without shift key and the window 
+    // width is greater than 800px, handle the chat
+    if (e.key === "Enter"&& !e.shiftKey && window.innerWidth >800) {
+        e.preventDefault();
+        handleChat();
+    }
+    
+});
 sendChatBtn.addEventListener("click",handleChat);
-chatboxCloseBtn.addEventListener("click",()=>document.body.classList.remove("show-chatbox"))
-chatboxToggler.addEventListener("click",()=>document.body.classList.toggle("show-chatbox"))
+chatboxCloseBtn.addEventListener("click",()=>document.body.classList.remove("show-chatbot"))
+chatboxToggler.addEventListener("click",()=>document.body.classList.toggle("show-chatbot"))
 
 
